@@ -9,7 +9,21 @@ import SwiftUI
 
 struct FeedView: View {
     var body: some View {
-        Text("This is a feed")
+        NavigationStack {
+            ScrollView {
+                LazyVStack {
+                    ForEach(0...10, id: \.self) { thread in
+                        PostCell()
+                    }
+                }
+            }
+            .refreshable {
+                print("DEBUG: Refresh feed")
+            }
+            .scrollIndicators(.hidden)
+            .navigationTitle("Jook")
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
