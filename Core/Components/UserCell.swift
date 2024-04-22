@@ -15,6 +15,7 @@ struct UserCell: View {
             VStack(alignment: .leading) {
                 Text("username")
                     .fontWeight(.semibold)
+                Text("Display Name")
             }
             .font(.footnote)
             

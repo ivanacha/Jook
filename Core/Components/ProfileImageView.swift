@@ -12,7 +12,7 @@ struct ProfileImageView: View {
         Image("Alima-profile")
             .resizable()
             .scaledToFill()
-            .frame(width: 40, height: 40)
+            .frame(width: 50, height: 50)
             .clipShape(Circle())
     }
 }

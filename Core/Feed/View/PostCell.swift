@@ -10,7 +10,7 @@ import SwiftUI
 struct PostCell: View {
     var body: some View {
         VStack {
-            HStack(alignment: .top, spacing: 12) {
+            HStack(alignment: .top, spacing: 10) {
                 ProfileImageView()
                 VStack(alignment: .leading) {
                     HStack {
@@ -36,7 +36,8 @@ struct PostCell: View {
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
                     
-                    HStack(spacing: 16) {
+                    // Include the counters between the icons
+                    HStack(spacing: 70) {
                         Button {
                             
                         } label: {
@@ -62,12 +63,13 @@ struct PostCell: View {
                         }
                     }
                     .foregroundStyle(Color(.black))
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 5)
                 }
             }
             Divider()
         }
-        .padding()
+        .padding(.horizontal, 8)
+        .padding(.vertical, 3)
 
     }
 }

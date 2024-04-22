@@ -8,6 +8,8 @@
 import SwiftUI
 struct PostsTabView: View {
     @State private var selectedTab = 0
+    @State private var showNewPostView = false
+    @State private var recentlySelectedTab = 0
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -26,7 +28,7 @@ struct PostsTabView: View {
                 .onAppear { selectedTab = 1 }
                 .tag(1)
             
-            NewPostView()
+            Text("")
                 .tabItem {
                     Image(systemName: "plus")
                 }
@@ -50,6 +52,17 @@ struct PostsTabView: View {
                 .tag(4)
 
         }
+        .onChange(of: selectedTab) { newValue, _ in
+            recentlySelectedTab = newValue
+            if selectedTab == 2 {
+                showNewPostView = true
+            }
+        }
+        .sheet(isPresented: $showNewPostView, onDismiss: {
+            selectedTab = recentlySelectedTab
+        }, content: {
+            NewPostView()
+        })
         .tint(.black)
     }
 }
