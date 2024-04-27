@@ -16,7 +16,7 @@ class ContentViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     init() {
-        
+        setupSubscribers()
     }
     
     private func setupSubscribers() {
