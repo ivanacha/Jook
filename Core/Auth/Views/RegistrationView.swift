@@ -36,6 +36,7 @@ struct RegistrationView: View {
                 
                 TextField("Enter your display name", text: $viewModel.displayName)
                     .modifier(CustomTextFieldModifier())
+                    .textInputAutocapitalization(.words)
                 
                 Button {
                     Task {
