@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ProfileImageView: View {
+    var user: User?
     var body: some View {
-        Image("Alima-profile")
-            .resizable()
-            .scaledToFill()
-            .frame(width: 50, height: 50)
-            .clipShape(Circle())
+        if let imageURL = user?.profileImageURL {
+//            ImageView(withURL: URL(string: imageURL))
+        
+        } else {
+            Image(systemName: "person.crop.circle.fill")
+                .resizable()
+                .frame(width: 50, height: 50)
+        }
     }
 }
 
