@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-struct PostsTabView: View {
+struct HomeTabView: View {
     @State private var selectedTab = 0
     @State private var showNewPostView = false
     @State private var recentlySelectedTab = 0
@@ -43,7 +43,7 @@ struct PostsTabView: View {
                 .onAppear { selectedTab = 3 }
                 .tag(3)
             
-            ProfileView()
+            CurrentUserProfileView()
                 .tabItem {
                     Image(systemName: selectedTab == 4 ? "person.fill" : "person")
                         .environment(\.symbolVariants, selectedTab == 4 ? .fill : .none)
@@ -68,5 +68,5 @@ struct PostsTabView: View {
 }
 
 #Preview {
-    PostsTabView()
+    HomeTabView()
 }
