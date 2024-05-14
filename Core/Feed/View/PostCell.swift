@@ -11,7 +11,7 @@ struct PostCell: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 10) {
-                ProfileImageView()
+                ProfileImageView(size: .small)
                 VStack(alignment: .leading) {
                     HStack {
                         Text("username")

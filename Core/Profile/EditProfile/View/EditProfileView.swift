@@ -43,7 +43,7 @@ struct EditProfileView: View {
                                     .frame(width: 40, height: 40)
                                     .clipShape(Circle())
                             } else {
-                                ProfileImageView()
+                                ProfileImageView(user: user, size: .small)
                             }
                         }
                     }
@@ -55,6 +55,7 @@ struct EditProfileView: View {
                         Text("Bio")
                             .fontWeight(.semibold)
                         
+                        // Introduce conditional statement to display user bio or placeholder.
                         TextField("Enter your bio...", text: $bio, axis: .vertical)
                         
                     }

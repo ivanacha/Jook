@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct NewPostView: View {
+    let user : User
     @Environment(\.dismiss) var dismiss
     @State private var caption = ""
+    
+//    init(user: User?) {
+//        self.user = user
+//    }
+    
     var body: some View {
         NavigationStack {
             VStack {
                 HStack(alignment: .top) {
-                    ProfileImageView()
+                    ProfileImageView(user: user,size: .small)
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("username")
+                        Text(user.username)
                             .fontWeight(.semibold)
                         TextField("What are you listening to?", text: $caption, axis: .vertical)
                     }
@@ -65,6 +71,8 @@ struct NewPostView: View {
     }
 }
 
-#Preview {
-    NewPostView()
+struct NewPostViewPreviews: PreviewProvider {
+    static var previews: some View{
+        NewPostView(user: dev.user)
+    }
 }

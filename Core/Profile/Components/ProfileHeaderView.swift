@@ -38,11 +38,7 @@ struct ProfileHeaderView: View {
             Spacer()
             
             // Profile Image View specific to the profile page
-            Image("Alima-profile")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 80, height: 80)
-                .clipShape(Circle())
+            ProfileImageView(user: user,size: .xLarge)
         }
     }
 }
