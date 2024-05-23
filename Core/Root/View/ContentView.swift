@@ -15,7 +15,7 @@ struct ContentView: View {
         Group {
             if viewModel.userSession != nil {
                 // If the user is signed in show TabView
-                HomeTabView(user: nil)
+                HomeTabView()
             } else {
                 LoginView()
             }

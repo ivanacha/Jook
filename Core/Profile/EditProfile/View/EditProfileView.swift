@@ -7,8 +7,9 @@
 
 import SwiftUI
 import PhotosUI
+
 struct EditProfileView: View {
-    let user: User
+    let user: User?
     @State private var fullname = ""
     @State private var bio = ""
     @State private var link = ""
@@ -30,7 +31,7 @@ struct EditProfileView: View {
                                 .fontWeight(.semibold)
                             
                             // Change to modifiable text field
-                            Text(user.displayName)
+                            Text(user?.displayName ?? "")
                         }
                      
                         Spacer()

@@ -48,9 +48,8 @@ struct CurrentUserProfileView: View {
                 }
             }
             .sheet(isPresented: $showEditProfile) {
-                if let user = currentUser {
-                    EditProfileView(user: user)
-                }
+                EditProfileView(user: currentUser)
+                    .environmentObject(viewModel)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -69,6 +68,8 @@ struct CurrentUserProfileView: View {
     }
 }
 
-#Preview {
-    CurrentUserProfileView()
+struct CurrentUserProfileViewPreviews: PreviewProvider {
+    static var previews: some View {
+        CurrentUserProfileView()
+    }
 }

@@ -10,7 +10,6 @@ struct HomeTabView: View {
     @State private var selectedTab = 0
     @State private var showNewPostView = false
     @State private var recentlySelectedTab = 0
-    let user: User?
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -62,7 +61,7 @@ struct HomeTabView: View {
         .sheet(isPresented: $showNewPostView, onDismiss: {
             selectedTab = recentlySelectedTab
         }, content: {
-            NewPostView(user: user)
+            NewPostView()
         })
         .tint(.black)
     }
@@ -70,6 +69,6 @@ struct HomeTabView: View {
 
 struct HomeTabViewPreviews: PreviewProvider {
     static var previews: some View {
-        HomeTabView(user: dev.user)
+        HomeTabView()
     }
 }

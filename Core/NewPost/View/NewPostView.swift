@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct NewPostView: View {
-    let user : User
     @Environment(\.dismiss) var dismiss
     @State private var caption = ""
     
@@ -16,14 +15,19 @@ struct NewPostView: View {
 //        self.user = user
 //    }
     
+    private var currentUser: User? {
+        return CurrentUserProfileViewModel().currentUser
+    }
+    
+    
     var body: some View {
         NavigationStack {
             VStack {
                 HStack(alignment: .top) {
-                    ProfileImageView(user: user,size: .small)
+                    ProfileImageView(user: currentUser,size: .small)
                     
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(user.username)
+                        Text(currentUser?.username ?? "")
                             .fontWeight(.semibold)
                         TextField("What are you listening to?", text: $caption, axis: .vertical)
                     }
@@ -73,6 +77,6 @@ struct NewPostView: View {
 
 struct NewPostViewPreviews: PreviewProvider {
     static var previews: some View{
-        NewPostView(user: dev.user)
+        NewPostView()
     }
 }
