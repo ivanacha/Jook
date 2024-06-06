@@ -21,7 +21,6 @@ class UserService {
     @MainActor
     func fetchCurrentUser() async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return } // Make sure that a user is currently logged in.
-        
         let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
         let user = try snapshot.data(as: User.self)
         self.currentUser = user
@@ -35,6 +34,10 @@ class UserService {
         return users.filter({ $0.id != currentUid }) // Filter current user ID from the user list.
     }
     
+    static func fetchUser(withUID uid: String) async throws -> User {
+        let snapshot = try await Firestore.firestore().collection("users").document(uid).getDocument()
+        return try snapshot.data(as: User.self)
+    }
     
     // Reset the current user locally.
     func reset() {
