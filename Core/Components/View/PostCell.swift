@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct PostCell: View {
+    let post: Post
+    
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 10) {
-                ProfileImageView(size: .small)
+                ProfileImageView(user: post.user, size: .small)
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("username")
+                        Text(post.user?.username ?? "")
                             .font(.footnote)
                             .fontWeight(.semibold)
                         
                         Spacer()
                         
-                        Text("10m")
+                        Text(post.timestamp.toString())
                             .font(.caption)
                             .foregroundStyle(Color(.secondaryLabel))
                         
@@ -32,7 +34,7 @@ struct PostCell: View {
                         }
                     }
                     
-                    Text("Sample review")
+                    Text(post.caption)
                         .font(.footnote)
                         .multilineTextAlignment(.leading)
                     
@@ -74,6 +76,8 @@ struct PostCell: View {
     }
 }
 
-#Preview {
-    PostCell()
+struct PostCellPreviews: PreviewProvider {
+    static var previews: some View{
+        PostCell(post: dev.post)
+    }
 }
