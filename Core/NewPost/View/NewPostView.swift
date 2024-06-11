@@ -10,13 +10,11 @@ import SwiftUI
 struct NewPostView: View {
     @Environment(\.dismiss) var dismiss
     @State private var caption = ""
+    @StateObject var viewModel = NewPostViewModel()
     
-//    init(user: User?) {
-//        self.user = user
-//    }
-    
+    // If fetching the user fails, we may have add the Combine functionality of listening for the user.
     private var currentUser: User? {
-        return CurrentUserProfileViewModel().currentUser
+        return UserService.shared.currentUser
     }
     
     
@@ -61,7 +59,10 @@ struct NewPostView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Post") {
-                        
+                        Task {
+                            try await viewModel.uploadPost(caption: caption)
+                            dismiss()
+                        }
                     }
                     .opacity(caption.isEmpty ? 0.5 : 1.0)
                     .disabled(caption.isEmpty)
