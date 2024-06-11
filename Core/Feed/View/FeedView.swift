@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct FeedView: View {
+    @StateObject var viewModel = FeedViewModel()
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack {
-                    ForEach(0...10, id: \.self) { thread in
-                        PostCell()
+                    ForEach(viewModel.posts) { post in
+                        PostCell(post: post)
                     }
                 }
             }
             .refreshable {
-                print("DEBUG: Refresh feed")
+                Task { try await viewModel.fetchPosts() }
             }
             .scrollIndicators(.hidden)
             .navigationTitle("Jook")
