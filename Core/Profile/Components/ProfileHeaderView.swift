@@ -30,7 +30,7 @@ struct ProfileHeaderView: View {
                         .font(.footnote)
                 }
                 
-                Text("2 Followers")
+                Text("X Followers")
                     .font(.caption)
                     .foregroundStyle(.gray)
             }

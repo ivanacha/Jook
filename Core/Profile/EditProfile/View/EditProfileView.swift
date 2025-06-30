@@ -12,7 +12,7 @@ struct EditProfileView: View {
     let user: User?
     @State private var fullname = ""
     @State private var bio = ""
-    @State private var link = ""
+    @State private var profileLink = ""
     @State private var isPrivateProfile = false
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel = EditProfileViewModel()
@@ -68,7 +68,7 @@ struct EditProfileView: View {
                         Text("Link")
                             .fontWeight(.semibold)
                         
-                        TextField("Add link...", text: $bio)
+                        TextField("Add link...", text: $profileLink)
                         
                     }
                     
