@@ -53,4 +53,23 @@ class UserService {
         self.currentUser?.profileImageURL = imageURL // Updates the current user's profile image locally through combine listeners.
     }
     
+    @MainActor
+    func updateUserSpotifyInfo(spotifyID: String, spotifyDisplayName: String) async throws {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        try await Firestore.firestore().collection("users").document(currentUid).updateData([
+            "spotifyID": spotifyID,
+            "spotifyDisplayName": spotifyDisplayName
+        ])
+        self.currentUser?.spotifyID = spotifyID
+        self.currentUser?.spotifyDisplayName = spotifyDisplayName
+    }
+    
+    @MainActor
+    func updateCurrentlyPlaying(track: String?) async throws {
+        guard let currentUid = Auth.auth().currentUser?.uid else { return }
+        let data: [String: Any] = track != nil ? ["currentlyPlaying": track!] : ["currentlyPlaying": FieldValue.delete()]
+        
+        try await Firestore.firestore().collection("users").document(currentUid).updateData(data)
+        self.currentUser?.currentlyPlaying = track
+    }
 }

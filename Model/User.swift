@@ -15,5 +15,17 @@ struct User: Identifiable, Codable, Hashable {
     var profileImageURL: String?
     var bio: String?
     var profileLink: String?
+    var spotifyID: String?
+    var spotifyDisplayName: String?
+    var currentlyPlaying: String?
+    var followers: [String] = []
+    var following: [String] = []
     
+    var followerCount: Int {
+        return followers.count
+    }
+    
+    var followingCount: Int {
+        return following.count
+    }
 }

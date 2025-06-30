@@ -13,12 +13,18 @@ struct PostCell: View {
     var body: some View {
         VStack {
             HStack(alignment: .top, spacing: 10) {
-                ProfileImageView(user: post.user, size: .small)
+                NavigationLink(destination: ProfileView(user: post.user ?? User(id: "", displayName: "", email: "", username: ""))) {
+                    ProfileImageView(user: post.user, size: .small)
+                }
+                
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(post.user?.username ?? "")
-                            .font(.footnote)
-                            .fontWeight(.semibold)
+                        NavigationLink(destination: ProfileView(user: post.user ?? User(id: "", displayName: "", email: "", username: ""))) {
+                            Text(post.user?.username ?? "")
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                        }
                         
                         Spacer()
                         
@@ -72,7 +78,6 @@ struct PostCell: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 3)
-
     }
 }
 

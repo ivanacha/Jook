@@ -30,15 +30,37 @@ struct ProfileHeaderView: View {
                         .font(.footnote)
                 }
                 
-                Text("X Followers")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("\(user?.followerCount ?? 0) Followers")
+                        .font(.caption)
+                        .foregroundStyle(.gray)
+                    
+                    if let currentlyPlaying = user?.currentlyPlaying {
+                        HStack(spacing: 4) {
+                            Image(systemName: "music.note")
+                                .font(.caption2)
+                                .foregroundColor(.green)
+                            Text("Listening to \(currentlyPlaying)")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                    } else if let spotifyDisplayName = user?.spotifyDisplayName {
+                        HStack(spacing: 4) {
+                            Image(systemName: "music.note")
+                                .font(.caption2)
+                                .foregroundColor(.green)
+                            Text("Connected to Spotify")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
             }
             
             Spacer()
             
             // Profile Image View specific to the profile page
-            ProfileImageView(user: user,size: .xLarge)
+            ProfileImageView(user: user, size: .xLarge)
         }
     }
 }

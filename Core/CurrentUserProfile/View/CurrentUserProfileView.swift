@@ -10,6 +10,7 @@ import SwiftUI
 struct CurrentUserProfileView: View {
     @StateObject var viewModel = CurrentUserProfileViewModel()
     @State private var showEditProfile = false
+    @State private var showSpotifyAuth = false
 
     private var filterBarWidth : CGFloat {
         let count = CGFloat(ProfileThreadFilter.allCases.count)
@@ -27,20 +28,39 @@ struct CurrentUserProfileView: View {
                     // Bio and stats
                     ProfileHeaderView(user: currentUser)
                     
-                    Button {
-                        showEditProfile.toggle()
-                    } label: {
-                        Text("Edit Profile")
-                            .font (.subheadline)
-                            .fontWeight(.semibold)
-                            .foregroundColor (.black)
-                            .frame (width: 352, height: 32)
-                            .background(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                            .overlay {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.systemGray4), lineWidth: 1)
+                    HStack(spacing: 12) {
+                        Button {
+                            showEditProfile.toggle()
+                        } label: {
+                            Text("Edit Profile")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.black)
+                                .frame(maxWidth: .infinity, height: 32)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color(.systemGray4), lineWidth: 1)
+                                }
+                        }
+                        
+                        if currentUser?.spotifyID == nil {
+                            Button {
+                                showSpotifyAuth.toggle()
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "music.note")
+                                    Text("Spotify")
+                                }
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .frame(width: 100, height: 32)
+                                .background(.green)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
                             }
+                        }
                     }
                     
                     // User Content List View
@@ -52,6 +72,9 @@ struct CurrentUserProfileView: View {
             .sheet(isPresented: $showEditProfile) {
                 EditProfileView(user: currentUser)
                     .environmentObject(viewModel)
+            }
+            .sheet(isPresented: $showSpotifyAuth) {
+                SpotifyAuthView()
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
