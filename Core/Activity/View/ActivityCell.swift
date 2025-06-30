@@ -12,18 +12,26 @@ struct ActivityCell: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            ProfileImageView(user: activity.user, size: .small)
+            NavigationLink(destination: ProfileView(user: activity.user ?? User(id: "", displayName: "", email: "", username: ""))) {
+                ProfileImageView(user: activity.user, size: .small)
+            }
             
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(activity.user?.username ?? "")
-                        .fontWeight(.semibold)
+                    NavigationLink(destination: ProfileView(user: activity.user ?? User(id: "", displayName: "", email: "", username: ""))) {
+                        Text(activity.user?.username ?? "")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                    }
                     
                     Text(activity.message)
                     
                     if let targetUser = activity.targetUser {
-                        Text(targetUser.username)
-                            .fontWeight(.semibold)
+                        NavigationLink(destination: ProfileView(user: targetUser)) {
+                            Text(targetUser.username)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                        }
                     }
                     
                     Spacer()

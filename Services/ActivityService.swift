@@ -30,8 +30,10 @@ struct ActivityService {
         let user = try await UserService.fetchUser(withUID: userID)
         let followingIDs = user.following
         
+        // If user isn't following anyone, return empty array
         guard !followingIDs.isEmpty else { return [] }
         
+        // Fetch activities from users they're following
         let snapshot = try await Firestore
             .firestore()
             .collection("activities")
@@ -47,16 +49,29 @@ struct ActivityService {
             let activity = activities[i]
             
             // Fetch the user who performed the activity
-            activities[i].user = try await UserService.fetchUser(withUID: activity.userID)
+            do {
+                activities[i].user = try await UserService.fetchUser(withUID: activity.userID)
+            } catch {
+                print("Error fetching user for activity: \(error)")
+                continue
+            }
             
             // Fetch target user if exists
             if let targetUserID = activity.targetUserID {
-                activities[i].targetUser = try await UserService.fetchUser(withUID: targetUserID)
+                do {
+                    activities[i].targetUser = try await UserService.fetchUser(withUID: targetUserID)
+                } catch {
+                    print("Error fetching target user for activity: \(error)")
+                }
             }
             
             // Fetch post if exists
             if let postID = activity.postID {
-                activities[i].post = try await PostService.fetchPost(postID: postID)
+                do {
+                    activities[i].post = try await PostService.fetchPost(postID: postID)
+                } catch {
+                    print("Error fetching post for activity: \(error)")
+                }
             }
         }
         

@@ -31,10 +31,19 @@ struct ProfileHeaderView: View {
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("\(user?.followerCount ?? 0) Followers")
-                        .font(.caption)
-                        .foregroundStyle(.gray)
+                    HStack(spacing: 8) {
+                        Text("\(user?.followerCount ?? 0)")
+                            .fontWeight(.semibold)
+                        Text("Followers")
+                        
+                        Text("\(user?.followingCount ?? 0)")
+                            .fontWeight(.semibold)
+                        Text("Following")
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.gray)
                     
+                    // Spotify status
                     if let currentlyPlaying = user?.currentlyPlaying {
                         HStack(spacing: 4) {
                             Image(systemName: "music.note")
@@ -43,7 +52,9 @@ struct ProfileHeaderView: View {
                             Text("Listening to \(currentlyPlaying)")
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
+                                .lineLimit(1)
                         }
+                        .padding(.top, 2)
                     } else if let spotifyDisplayName = user?.spotifyDisplayName {
                         HStack(spacing: 4) {
                             Image(systemName: "music.note")
@@ -53,6 +64,7 @@ struct ProfileHeaderView: View {
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                         }
+                        .padding(.top, 2)
                     }
                 }
             }

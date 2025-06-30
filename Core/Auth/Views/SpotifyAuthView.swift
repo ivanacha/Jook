@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct SpotifyAuthView: View {
     @StateObject var spotifyService = SpotifyService.shared

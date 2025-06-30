@@ -7,6 +7,7 @@
 
 import Foundation
 import AuthenticationServices
+import Firebase
 
 class SpotifyService: NSObject, ObservableObject {
     static let shared = SpotifyService()
@@ -73,11 +74,38 @@ class SpotifyService: NSObject, ObservableObject {
     private func exchangeCodeForToken(code: String) async {
         // Implementation for token exchange
         // This would typically involve making a POST request to Spotify's token endpoint
-        // For now, we'll simulate success
+        // For now, we'll simulate success and create/update user
         DispatchQueue.main.async {
             self.isAuthenticated = true
             self.accessToken = "mock_access_token"
         }
+        
+        // Create or update user in Firebase if they don't exist
+        await createOrUpdateSpotifyUser()
+    }
+    
+    private func createOrUpdateSpotifyUser() async {
+        guard let currentUser = Auth.auth().currentUser else {
+            // If no Firebase user exists, create one for the Spotify user
+            await createFirebaseUserForSpotify()
+            return
+        }
+        
+        // Update existing Firebase user with Spotify info
+        do {
+            try await UserService.shared.updateUserSpotifyInfo(
+                spotifyID: "mock_spotify_id",
+                spotifyDisplayName: "Spotify User"
+            )
+        } catch {
+            print("Error updating Spotify info: \(error)")
+        }
+    }
+    
+    private func createFirebaseUserForSpotify() async {
+        // This would typically involve creating a Firebase user account
+        // using Spotify user information. For now, we'll just mark as authenticated
+        print("Would create Firebase user for Spotify user")
     }
     
     func getCurrentlyPlaying() async -> SpotifyTrack? {
@@ -102,6 +130,17 @@ class SpotifyService: NSObject, ObservableObject {
             spotifyID: "mock_spotify_id",
             spotifyDisplayName: "Spotify User"
         )
+    }
+    
+    func updateCurrentlyPlaying() async {
+        guard let track = await getCurrentlyPlaying() else {
+            // Clear currently playing if no track
+            try? await UserService.shared.updateCurrentlyPlaying(track: nil)
+            return
+        }
+        
+        let trackString = "\(track.name) by \(track.artist)"
+        try? await UserService.shared.updateCurrentlyPlaying(track: trackString)
     }
 }
 
